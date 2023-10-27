@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct5y4skqhwwij"]
+
+[ext_resource type="PackedScene" uid="uid://cn8mw3h8uya21" path="res://addons/scene_task_tracker/task_marker.tscn" id="1_r5lit"]
+[ext_resource type="PackedScene" uid="uid://cbr356plefma2" path="res://addons/scene_task_tracker/model/markers/CheckMark.glb" id="2_vs6sc"]
+
+[node name="Completed - 20231027" type="Node3D"]
+
+[node name="task_marker2" parent="." instance=ExtResource("1_r5lit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -6)
+description = "Completed task 1"
+fixed = true
+
+[node name="@Node3D@25756" parent="task_marker2" instance=ExtResource("2_vs6sc")]
+
+[node name="CheckMark" type="Node3D" parent="task_marker2" instance=ExtResource("2_vs6sc")]
+
+[node name="task_marker3" parent="." instance=ExtResource("1_r5lit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 1, -6)
+description = "Completed task 2"
+fixed = true
+
+[node name="_Node3D_22679" parent="task_marker3" instance=ExtResource("2_vs6sc")]
+
+[node name="@Node3D@25757" parent="task_marker3" instance=ExtResource("2_vs6sc")]
+
+[node name="CheckMark" type="Node3D" parent="task_marker3" instance=ExtResource("2_vs6sc")]
+
+[node name="task_marker4" parent="." instance=ExtResource("1_r5lit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -4)
+description = "Completed task 3"
+fixed = true
+
+[node name="_Node3D_22679" parent="task_marker4" instance=ExtResource("2_vs6sc")]
+
+[node name="_Node3D_22970" parent="task_marker4" instance=ExtResource("2_vs6sc")]
+
+[node name="@Node3D@25758" parent="task_marker4" instance=ExtResource("2_vs6sc")]
+
+[node name="CheckMark" type="Node3D" parent="task_marker4" instance=ExtResource("2_vs6sc")]

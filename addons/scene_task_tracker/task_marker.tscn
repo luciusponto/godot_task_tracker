@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn8mw3h8uya21"]
+
+[ext_resource type="Script" path="res://addons/scene_task_tracker/scripts/task_marker.gd" id="1_qvq5q"]
+[ext_resource type="PackedScene" uid="uid://de8jdfwu3x5vb" path="res://addons/scene_task_tracker/model/markers/Marker Arrow.glb" id="3_lmnyk"]
+
+[node name="task_marker" type="Node3D" groups=["bug_marker"]]
+script = ExtResource("1_qvq5q")
+description = "Fix: problem with the thing"
+
+[node name="Label3D" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+billboard = 2
+text = "Fix: problem with the thing
+
+"
+font_size = 16
+vertical_alignment = 2
+autowrap_mode = 3
+width = 250.0
+
+[node name="Marker Arrow" parent="." instance=ExtResource("3_lmnyk")]

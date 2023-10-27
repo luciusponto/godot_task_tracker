@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bsljevnb8f21t"]
+
+[ext_resource type="Shader" path="res://addons/scene_task_tracker/model/markers/shaders/task_marker_code.gdshader" id="1_ewq8v"]
+[ext_resource type="Material" uid="uid://cg4vw4j2471mu" path="res://addons/scene_task_tracker/model/markers/materials/outline.tres" id="1_pg7tq"]
+
+[resource]
+render_priority = 0
+next_pass = ExtResource("1_pg7tq")
+shader = ExtResource("1_ewq8v")
+shader_parameter/alpha = 0.9

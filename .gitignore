@@ -13,3 +13,9 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+#Blender
+*.blend1
+
+# Specific to this project
+tests
