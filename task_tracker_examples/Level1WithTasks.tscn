@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://y2bkcvra282e"]
+[gd_scene load_steps=4 format=3 uid="uid://y2bkcvra282e"]
 
 [ext_resource type="PackedScene" uid="uid://cg0u15wuh8t1n" path="res://task_tracker_examples/scenes/Level1.tscn" id="1_jmu1n"]
 [ext_resource type="PackedScene" uid="uid://cn8mw3h8uya21" path="res://addons/scene_task_tracker/task_marker.tscn" id="2_brofy"]
+[ext_resource type="PackedScene" uid="uid://ct5y4skqhwwij" path="res://task_tracker_examples/tasks/completed___20231027.tscn" id="3_smny1"]
 
 [node name="TaskMarkersExample" type="Node3D"]
 
@@ -9,46 +10,50 @@
 
 [node name="Tasks" type="Node3D" parent="."]
 
-[node name="task_marker" parent="Tasks" instance=ExtResource("2_brofy")]
+[node name="Active" type="Node3D" parent="Tasks"]
+
+[node name="task_marker" parent="Tasks/Active" instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 1, 8)
 description = "Fix: ground cube should be green
 "
 task_type = 0
 
-[node name="task_marker2" parent="Tasks" instance=ExtResource("2_brofy")]
+[node name="task_marker2" parent="Tasks/Active" instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 description = "Fix: tall box is missing collision"
 task_type = 0
 
-[node name="task_marker3" parent="Tasks" instance=ExtResource("2_brofy")]
+[node name="task_marker3" parent="Tasks/Active" instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 3, 6)
 description = "Bevel edges of middle box"
 task_type = 3
 
-[node name="task_marker4" parent="Tasks" instance=ExtResource("2_brofy")]
+[node name="task_marker4" parent="Tasks/Active" instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.360456, 1.5, 10.1529)
 description = "Add ability to break small boxes"
 task_type = 1
 
-[node name="task_marker5" parent="Tasks" instance=ExtResource("2_brofy")]
+[node name="task_marker5" parent="Tasks/Active" instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 11)
 description = "Refactor code that does the thing"
 task_type = 2
 
-[node name="Regression Tests" type="Node3D" parent="."]
+[node name="task_marker6" parent="Tasks/Active" instance=ExtResource("2_brofy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3395, 0.5, 1.5949)
 
-[node name="task_marker6" parent="Regression Tests" instance=ExtResource("2_brofy")]
+[node name="Regression Tests" type="Node3D" parent="Tasks"]
+
+[node name="task_marker6" parent="Tasks/Regression Tests" instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 8, 1)
 description = "Ensure tall box still has collision"
 task_type = 4
 
-[node name="Completed Tasks" type="Node3D" parent="."]
+[node name="Completed" type="Node3D" parent="Tasks"]
 
-[node name="task_marker6" parent="Completed Tasks" instance=ExtResource("2_brofy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.82823, 3.5, 8.26624)
+[node name="task_marker6" parent="Tasks/Completed" instance=ExtResource("2_brofy")]
+transform = Transform3D(0.999995, -0.00289915, 0.000857807, 0.00289731, 0.999994, 0.00213426, -0.000863997, -0.00213177, 0.999997, -8.82823, 3.5, 12.2662)
 description = "Add player prefab to level"
 task_type = 0
 fixed = true
 
-[node name="task_marker" parent="." instance=ExtResource("2_brofy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3395, 0.5, 1.5949)
+[node name="Completed - 20231027" parent="Tasks/Completed" instance=ExtResource("3_smny1")]

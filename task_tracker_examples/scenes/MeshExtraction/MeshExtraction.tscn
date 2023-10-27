@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://bgjtuacgo0o82"]
+
+[node name="MeshExtraction" type="Node3D"]

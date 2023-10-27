@@ -21,6 +21,15 @@ const BILLBOARDS = [
 	preload("res://addons/scene_task_tracker/model/markers/UnknownMarker.glb"),
 ]
 
+const MESHES = [
+	preload("res://addons/scene_task_tracker/model/markers/mesh/bug_marker.tres"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/feature.tres"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/tech_improvement.tres"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/polish.tres"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/regression_test.tres"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/unknown.tres"),
+]
+
 const ICONS = [
 	preload("res://addons/scene_task_tracker/icons/bug.svg"),
 	preload("res://addons/scene_task_tracker/icons/feature.svg"),
@@ -39,11 +48,9 @@ const COLORS = [
 	Color.MAGENTA,
 ]
 
-const DEFAULT_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/UnknownMarker.glb")
 const DEFAULT_ICON = preload("res://addons/scene_task_tracker/icons/unkown.svg")
+const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/checkmark.tres")
 const DEFAULT_COLOR = Color.MAGENTA
-
-const FIXED_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/CheckMark.glb")
 
 @export_multiline var description: String = "Task description here":
 	get:
@@ -89,7 +96,7 @@ const FIXED_BILLBOARD = preload("res://addons/scene_task_tracker/model/markers/C
 
 @onready var label_3d = %Label3D
 
-var _billboard: Node3D
+var _task_type_meshes: Array[Node3D] = []
 var _initialized := false
 
 
@@ -123,13 +130,9 @@ func _update_label():
 		
 
 func _update_mesh():
-#	print("Updating mesh for " + name)
-	if _billboard:
-		_billboard.free()
-	var _billboard_res
 	if fixed:
-		_billboard_res = FIXED_BILLBOARD
+		(%TaskTypeMesh as MeshInstance3D).mesh = FIXED_MESH
+	elif task_type >= 0 and task_type <= len(MESHES):
+		(%TaskTypeMesh as MeshInstance3D).mesh = MESHES[task_type]
 	else:
-		_billboard_res = BILLBOARDS[task_type]
-	_billboard = _billboard_res.instantiate()
-	add_child(_billboard)
+		push_error("Cannot find mesh - out of bounds. Index (from task type) = " + str(int(task_type)))
