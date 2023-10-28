@@ -48,9 +48,8 @@ const COLORS = [
 	Color.MAGENTA,
 ]
 
-const DEFAULT_ICON = preload("res://addons/scene_task_tracker/icons/unkown.svg")
+const DEFAULT_TYPE = TaskTypes.UNKNOWN
 const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/checkmark.tres")
-const DEFAULT_COLOR = Color.MAGENTA
 
 @export_multiline var description: String = "Task description here":
 	get:
@@ -109,13 +108,13 @@ func _ready():
 
 func get_color() -> Color:
 	if task_type > len(COLORS) - 1:
-		return DEFAULT_COLOR
+		return COLORS[DEFAULT_TYPE]
 	return COLORS[task_type]
 
 
 func get_icon() -> Texture2D:
 	if task_type > len(ICONS) - 1:
-		return DEFAULT_ICON
+		return ICONS[DEFAULT_TYPE]
 	return ICONS[task_type]
 
 

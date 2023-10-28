@@ -6,6 +6,9 @@ const ITEM = preload("res://addons/scene_task_tracker/UI/task_item_bt.gd")
 const NODE_SELECTOR_R = preload("res://addons/scene_task_tracker/UI/node_selector.gd")
 const REFRESH_PERIOD_MS = 2000
 
+const SEL_SCENE_ONLY_ID = 30
+const SEL_SUBSCENES_ID = 31
+
 var _item_resource = preload("res://addons/scene_task_tracker/UI/task_item_bt.tscn")
 var _edited_root: Node
 var _is_dirty: bool
@@ -24,6 +27,8 @@ var _scene_popup: PopupMenu
 var _scene_2_popup: PopupMenu
 var _filter_popup: PopupMenu
 
+var _select_from_scene_only := true
+
 
 func _enter_tree():
 	_node_selector = NODE_SELECTOR_R.new()
@@ -38,7 +43,9 @@ func _exit_tree():
 func _ready():
 	_scene_2_popup = (%SceneMenuButton2 as MenuButton).get_popup()
 	_scene_2_popup.id_pressed.connect(_on_scene_2_popup_menu_id_pressed)
+	_scene_2_popup.hide_on_checkable_item_selection = false
 	_scene_2_popup.hide_on_item_selection = false
+	_set_selection_scope_menu_items()
 	_filter_popup = (%FilterMenuButton as MenuButton).get_popup()
 	_filter_popup.hide_on_checkable_item_selection = false
 	_filter_popup.hide_on_item_selection = false
@@ -153,12 +160,23 @@ func _get_markers_from_scene() -> Array[Node]:
 		return []
 
 
+func _set_selection_scope_menu_items():
+	_scene_2_popup.set_item_checked(_scene_2_popup.get_item_index(SEL_SCENE_ONLY_ID), _select_from_scene_only)
+	_scene_2_popup.set_item_checked(_scene_2_popup.get_item_index(SEL_SUBSCENES_ID), not _select_from_scene_only)
+
+
 func _on_scene_2_popup_menu_id_pressed(id):
+	if id == SEL_SCENE_ONLY_ID or id == SEL_SUBSCENES_ID:
+		_select_from_scene_only = true if id == SEL_SCENE_ONLY_ID else false
+		_set_selection_scope_menu_items()
+		return
+		
 	var ed_sc_root = get_tree().edited_scene_root
 	if not ed_sc_root:
 		return
 	
 	if id >= 0 and id <= 5:
+		var prev_selected_nodes = []
 		var filter = func(a):
 			return false
 		match id:
@@ -177,13 +195,20 @@ func _on_scene_2_popup_menu_id_pressed(id):
 			4: # REGRESSION TEST
 				filter = func(a):
 					return a.task_type == BUG_MARKER.TaskTypes.REGRESSION_TEST
+			5: # INVERT SELECTION
+				prev_selected_nodes = _node_selector.get_selection().get_selected_nodes()
 	
 		var markers: Array[Node] = _get_markers_from_scene()
 		var selected_nodes: Array[Node] = [] as Array[Node]
 		for marker in markers:
 			var marker_script = marker as BUG_MARKER
-			if filter.call(marker_script) and marker.owner == _edited_root:
-				selected_nodes.append(marker)
+			var marker_in_scope = marker.owner == _edited_root or not _select_from_scene_only
+			if marker_in_scope:
+				if id == 5: # INVERT SELECTION
+					if not prev_selected_nodes.has(marker):
+						selected_nodes.append(marker)
+				elif filter.call(marker_script):
+					selected_nodes.append(marker)
 		_node_selector.set_selection(selected_nodes)
 	
 	elif id == 15:

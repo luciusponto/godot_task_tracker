@@ -39,7 +39,7 @@ description = "Refactor code that does the thing"
 task_type = 2
 
 [node name="task_marker6" parent="Tasks/Active" instance=ExtResource("2_brofy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3395, 0.5, 1.5949)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -10.3395, 0.5, 1.5949)
 
 [node name="Regression Tests" type="Node3D" parent="Tasks"]
 
