@@ -51,6 +51,7 @@ const COLORS = [
 const DEFAULT_TYPE = TaskTypes.UNKNOWN
 const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/checkmark.tres")
 
+## Short description
 @export_multiline var description: String = "Task description here":
 	get:
 		return description
@@ -59,6 +60,7 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/c
 		_update_label()
 		task_changed.emit()
 
+## Extra information
 @export_multiline var details: String:
 	get:
 		return details
@@ -67,7 +69,7 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/c
 		_update_label()
 		task_changed.emit()
 
-
+## Task type
 @export var task_type: TaskTypes = TaskTypes.UNKNOWN:
 	get:
 		return task_type
@@ -77,6 +79,7 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/c
 		_update_mesh()
 
 
+## Task priority. Highest is 5, lowest is 1.
 @export_range(1, 5) var priority: int = 1:
 	get:
 		return priority
@@ -84,6 +87,8 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/c
 		priority = value
 		task_changed.emit()
 
+
+## Set to true if the task has been completed
 @export var fixed: bool = false:
 	get:
 		return fixed
@@ -116,6 +121,13 @@ func get_icon() -> Texture2D:
 	if task_type > len(ICONS) - 1:
 		return ICONS[DEFAULT_TYPE]
 	return ICONS[task_type]
+	
+	
+func get_task_type_name() -> String:
+	var keys = TaskTypes.keys()
+	if task_type > len(keys):
+		return keys[DEFAULT_TYPE]
+	return keys[task_type]
 
 
 func _setup() -> void:

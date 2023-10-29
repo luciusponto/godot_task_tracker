@@ -11,23 +11,13 @@
 [ext_resource type="Texture2D" uid="uid://ddn5r3wsuq0b3" path="res://addons/scene_task_tracker/icons/checkmark.svg" id="9_4ase0"]
 [ext_resource type="Texture2D" uid="uid://cs7csgfpcb80m" path="res://addons/scene_task_tracker/icons/refresh.svg" id="10_53ics"]
 
-[node name="Tasks" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-tooltip_text = "Shows bug_marker tasks placed in currently edited scene when \"Refresh\" is pressed"
+[node name="Tasks" type="MarginContainer"]
+offset_right = 1151.0
+offset_bottom = 40.0
 script = ExtResource("1_rbxm5")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -36,7 +26,8 @@ size_flags_horizontal = 3
 [node name="FilterMenuButton" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Filter List"
+tooltip_text = "Filter contents of task list"
+text = "Filter"
 icon = ExtResource("2_62ycd")
 item_count = 10
 popup/item_0/text = "All"
@@ -87,6 +78,7 @@ layout_mode = 2
 
 [node name="RefreshButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Refresh task list"
 icon = ExtResource("10_53ics")
 flat = true
 
@@ -97,43 +89,39 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Perform actions on currently edited scene"
-text = "Select Nodes"
-item_count = 13
-popup/item_0/text = "Task Markers To Select"
-popup/item_0/id = 17
-popup/item_0/disabled = true
-popup/item_0/separator = true
-popup/item_1/text = "All"
-popup/item_1/id = 0
-popup/item_2/text = "None"
-popup/item_2/id = 1
-popup/item_3/text = "Invert"
-popup/item_3/id = 5
-popup/item_4/text = "Pending"
-popup/item_4/id = 2
-popup/item_5/text = "Completed"
-popup/item_5/id = 3
-popup/item_6/text = "Regression Tests"
-popup/item_6/id = 4
-popup/item_7/text = "Selection Scope"
-popup/item_7/id = 22
-popup/item_7/disabled = true
-popup/item_7/separator = true
-popup/item_8/text = "Current Scene Only"
+text = "Task Markers"
+item_count = 12
+popup/item_0/text = "Select All"
+popup/item_0/id = 0
+popup/item_1/text = "Select None"
+popup/item_1/id = 1
+popup/item_2/text = "Invert Selection"
+popup/item_2/id = 5
+popup/item_3/text = "Select Pending"
+popup/item_3/id = 2
+popup/item_4/text = "Select Completed"
+popup/item_4/id = 3
+popup/item_5/text = "Select Regression Tests"
+popup/item_5/id = 4
+popup/item_6/text = "Selection Scope"
+popup/item_6/id = 22
+popup/item_6/disabled = true
+popup/item_6/separator = true
+popup/item_7/text = "Current Scene Only"
+popup/item_7/checkable = 2
+popup/item_7/checked = true
+popup/item_7/id = 30
+popup/item_8/text = "Include Child Scenes"
 popup/item_8/checkable = 2
-popup/item_8/checked = true
-popup/item_8/id = 30
-popup/item_9/text = "Include Child Scenes"
-popup/item_9/checkable = 2
-popup/item_9/id = 31
-popup/item_10/text = "Actions"
-popup/item_10/id = 20
-popup/item_10/disabled = true
-popup/item_10/separator = true
-popup/item_11/text = "Hide Selected"
-popup/item_11/id = 15
-popup/item_12/text = "Show Selected"
-popup/item_12/id = 16
+popup/item_8/id = 31
+popup/item_9/text = "Actions"
+popup/item_9/id = 20
+popup/item_9/disabled = true
+popup/item_9/separator = true
+popup/item_10/text = "Hide Selected"
+popup/item_10/id = 15
+popup/item_11/text = "Show Selected"
+popup/item_11/id = 16
 
 [node name="Panel" type="Panel" parent="VBoxContainer"]
 layout_mode = 2
@@ -155,5 +143,3 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 1
-
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/RefreshButton" to="." method="_on_refresh_button_pressed"]

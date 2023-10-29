@@ -27,10 +27,13 @@ func setup(target_task):
 	var status_icon_index = 1 if task.fixed else 0
 	%StatusIcon.texture = STATUS_ICONS[status_icon_index]
 	%StatusIcon.modulate = STATUS_COLORS[status_icon_index]
+	%StatusIcon.tooltip_text = "Status: " + ("fixed" if task.fixed else "completed")
 	%TaskTypeIcon.texture = task.get_icon()
 	%TaskTypeIcon.modulate = task.get_color()
+	%TaskTypeIcon.tooltip_text = task.get_task_type_name().to_lower().capitalize()
 	%FixedCheckBox.button_pressed = task.fixed
 	%PriorityLabel.text = str(task.priority)
+	%PriorityLabel.tooltip_text = "Priority: " + str(task.priority)
 	task_priority = task.priority
 
 

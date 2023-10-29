@@ -28,6 +28,7 @@ expand_mode = 3
 [node name="PriorityLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 1
 text = "5"
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
@@ -40,6 +41,7 @@ theme_override_constants/margin_bottom = 5
 [node name="StatusIcon" type="TextureRect" parent="MarginContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+expand_mode = 3
 
 [node name="FixedCheckBox" type="CheckBox" parent="."]
 unique_name_in_owner = true
