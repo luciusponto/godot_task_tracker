@@ -82,16 +82,15 @@ popup/item_9/checkable = 1
 popup/item_9/id = 7
 
 [node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="RefreshButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
-text = "Refresh"
 icon = ExtResource("10_53ics")
+flat = true
 
 [node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="SceneMenuButton2" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
