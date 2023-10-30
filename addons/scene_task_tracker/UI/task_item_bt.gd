@@ -22,7 +22,7 @@ func setup(target_task):
 	var status_icon_index = 1 if task.fixed else 0
 	%StatusIcon.texture = STATUS_ICONS[status_icon_index]
 	%StatusIcon.modulate = BUG_MARKER.STATUS_COLORS[status_icon_index]
-	%StatusIcon.tooltip_text = "Status: " + ("fixed" if task.fixed else "completed")
+	%StatusIcon.tooltip_text = "Status: " + ("completed" if task.fixed else "pending")
 	%TaskTypeIcon.texture = task.get_icon()
 	%TaskTypeIcon.modulate = task.get_color()
 	%TaskTypeIcon.tooltip_text = task.get_task_type_name().to_lower().capitalize()
