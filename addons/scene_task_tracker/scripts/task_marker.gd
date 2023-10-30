@@ -12,6 +12,21 @@ enum TaskTypes {
 	UNKNOWN,
 }
 
+enum Priority {
+	VERY_LOW,
+	LOW,
+	MEDIUM,
+	HIGH,
+	VERY_HIGH,
+	UNKNOWN,
+}
+
+enum Status {
+	PENDING,
+	COMPLETED,
+	UNKNOWN,
+}
+
 const MESHES = [
 	preload("res://addons/scene_task_tracker/model/markers/mesh/BugMarkerNew.obj"),
 	preload("res://addons/scene_task_tracker/model/markers/mesh/FeatureMarker.obj"),
@@ -45,6 +60,8 @@ const STATUS_COLORS = [
 ]
 
 const DEFAULT_TYPE = TaskTypes.UNKNOWN
+const DEFAULT_PRIORITY = Priority.LOW
+const DEFAULT_STATUS = Status.PENDING
 
 const FIXED_MESH_COLOR = Color.LIME_GREEN
 const MARKER_ARROW_COLOR = Color.YELLOW
@@ -79,14 +96,21 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/C
 		_update_mesh()
 
 
-## Task priority. Highest is 5, lowest is 1.
-@export_range(1, 5) var priority: int = 1:
+## Task priority
+@export var priority := Priority.VERY_LOW:
 	get:
 		return priority
 	set(value):
 		priority = value
 		task_changed.emit()
 
+## Task priority
+@export var priority_en := Priority.UNKNOWN:
+	get:
+		return priority_en
+	set(value):
+		priority_en = value
+		task_changed.emit()
 
 ## Set to true if the task has been completed
 @export var fixed: bool = false:
@@ -97,6 +121,14 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/C
 		_update_mesh()
 		task_changed
 
+## Task status
+@export var status := Status.UNKNOWN:
+	get:
+		return status
+	set(value):
+		status = value
+		_update_mesh()
+		task_changed
 
 @onready var label_3d = %Label3D
 
@@ -106,6 +138,7 @@ var _initialized := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	priority = priority_en
 	if OS.is_debug_build():
 		if not _initialized:
 			_setup.call_deferred()
@@ -133,6 +166,20 @@ func get_task_type_name() -> String:
 	if task_type > len(keys):
 		return keys[DEFAULT_TYPE]
 	return keys[task_type]
+	
+	
+func get_priority_string() -> String:
+	return Priority.keys()[priority]
+	
+	
+func get_status_string() -> String:
+	return Status.keys()[status]
+
+
+#func _migrate_enums():
+#	print(name + " - priority: " + Priority.keys()[priority] + "; status: " + Status.keys()[status])
+#	priority_en = priority - 1
+#	status = Status.COMPLETED if fixed else Status.PENDING
 
 
 func _setup() -> void:

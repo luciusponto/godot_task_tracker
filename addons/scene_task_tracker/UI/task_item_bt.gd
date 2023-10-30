@@ -11,7 +11,7 @@ const STATUS_ICONS = [
 ]
 
 var task_instance_id: int
-var task_priority: int
+var task_priority: BUG_MARKER.Priority
 
 
 func setup(target_task):
@@ -22,13 +22,12 @@ func setup(target_task):
 	var status_icon_index = 1 if task.fixed else 0
 	%StatusIcon.texture = STATUS_ICONS[status_icon_index]
 	%StatusIcon.modulate = BUG_MARKER.STATUS_COLORS[status_icon_index]
-	%StatusIcon.tooltip_text = "Status: " + ("completed" if task.fixed else "pending")
+	%StatusIcon.tooltip_text = "Status: " + task.get_status_string().to_lower()
 	%TaskTypeIcon.texture = task.get_icon()
 	%TaskTypeIcon.modulate = task.get_color()
 	%TaskTypeIcon.tooltip_text = task.get_task_type_name().to_lower().capitalize()
-	%FixedCheckBox.button_pressed = task.fixed
-	%PriorityLabel.text = str(task.priority)
-	%PriorityLabel.tooltip_text = "Priority: " + str(task.priority)
+	%PriorityLabel.text = str(task.priority + 1)
+	%PriorityLabel.tooltip_text = "Priority: " + str(task.get_priority_string().to_lower().capitalize())
 	task_priority = task.priority
 
 
