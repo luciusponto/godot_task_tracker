@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://durt0i8b5al5s"
+path="res://.godot/imported/PolishMarker.obj-8270d61455593cf07054fa31c32c3896.mesh"
+
+[deps]
+
+files=["res://.godot/imported/PolishMarker.obj-8270d61455593cf07054fa31c32c3896.mesh"]
+
+source_file="res://addons/scene_task_tracker/model/markers/mesh/PolishMarker.obj"
+dest_files=["res://.godot/imported/PolishMarker.obj-8270d61455593cf07054fa31c32c3896.mesh", "res://.godot/imported/PolishMarker.obj-8270d61455593cf07054fa31c32c3896.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

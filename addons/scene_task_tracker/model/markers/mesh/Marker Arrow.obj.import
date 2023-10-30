@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bax2hcl6eto54"
+path="res://.godot/imported/Marker Arrow.obj-15a60d8e6935c6e113ee0ec79c576943.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Marker Arrow.obj-15a60d8e6935c6e113ee0ec79c576943.mesh"]
+
+source_file="res://addons/scene_task_tracker/model/markers/mesh/Marker Arrow.obj"
+dest_files=["res://.godot/imported/Marker Arrow.obj-15a60d8e6935c6e113ee0ec79c576943.mesh", "res://.godot/imported/Marker Arrow.obj-15a60d8e6935c6e113ee0ec79c576943.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

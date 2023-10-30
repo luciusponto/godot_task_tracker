@@ -10,11 +10,6 @@ const STATUS_ICONS = [
 	preload("res://addons/scene_task_tracker/icons/checkmark.svg")
 ]
 
-const STATUS_COLORS = [
-	Color.DARK_SALMON,
-	Color.DARK_OLIVE_GREEN
-]
-
 var task_instance_id: int
 var task_priority: int
 
@@ -26,7 +21,7 @@ func setup(target_task):
 	%DescriptionButton.tooltip_text = task.description
 	var status_icon_index = 1 if task.fixed else 0
 	%StatusIcon.texture = STATUS_ICONS[status_icon_index]
-	%StatusIcon.modulate = STATUS_COLORS[status_icon_index]
+	%StatusIcon.modulate = BUG_MARKER.STATUS_COLORS[status_icon_index]
 	%StatusIcon.tooltip_text = "Status: " + ("fixed" if task.fixed else "completed")
 	%TaskTypeIcon.texture = task.get_icon()
 	%TaskTypeIcon.modulate = task.get_color()

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bqrmp8x56cval"
+path="res://.godot/imported/CheckMark.obj-8b70f82676d7cf1b9d169d734953a2b7.mesh"
+
+[deps]
+
+files=["res://.godot/imported/CheckMark.obj-8b70f82676d7cf1b9d169d734953a2b7.mesh"]
+
+source_file="res://addons/scene_task_tracker/model/markers/mesh/CheckMark.obj"
+dest_files=["res://.godot/imported/CheckMark.obj-8b70f82676d7cf1b9d169d734953a2b7.mesh", "res://.godot/imported/CheckMark.obj-8b70f82676d7cf1b9d169d734953a2b7.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

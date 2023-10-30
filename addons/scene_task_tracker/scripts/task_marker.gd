@@ -12,22 +12,13 @@ enum TaskTypes {
 	UNKNOWN,
 }
 
-const BILLBOARDS = [
-	preload("res://addons/scene_task_tracker/model/markers/BugMarkerNew.glb"),
-	preload("res://addons/scene_task_tracker/model/markers/FeatureMarker.glb"),
-	preload("res://addons/scene_task_tracker/model/markers/TechImprMarker.glb"),
-	preload("res://addons/scene_task_tracker/model/markers/PolishMarker.glb"),
-	preload("res://addons/scene_task_tracker/model/markers/RegTestMarker.glb"),
-	preload("res://addons/scene_task_tracker/model/markers/UnknownMarker.glb"),
-]
-
 const MESHES = [
-	preload("res://addons/scene_task_tracker/model/markers/mesh/bug_marker.tres"),
-	preload("res://addons/scene_task_tracker/model/markers/mesh/feature.tres"),
-	preload("res://addons/scene_task_tracker/model/markers/mesh/tech_improvement.tres"),
-	preload("res://addons/scene_task_tracker/model/markers/mesh/polish.tres"),
-	preload("res://addons/scene_task_tracker/model/markers/mesh/regression_test.tres"),
-	preload("res://addons/scene_task_tracker/model/markers/mesh/unknown.tres"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/BugMarkerNew.obj"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/FeatureMarker.obj"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/TechImprMarker.obj"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/PolishMarker.obj"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/RegTestMarker.obj"),
+	preload("res://addons/scene_task_tracker/model/markers/mesh/UnknownMarker.obj"),
 ]
 
 const ICONS = [
@@ -42,14 +33,23 @@ const ICONS = [
 const COLORS = [
 	Color.CORAL,
 	Color.AQUAMARINE,
-	Color.GOLD,
-	Color.MEDIUM_AQUAMARINE,
-	Color.SILVER,
+	Color.GOLDENROD,
+	Color.LIGHT_SEA_GREEN,
+	Color.LIGHT_STEEL_BLUE,
 	Color.MAGENTA,
 ]
 
+const STATUS_COLORS = [
+	Color.DARK_SALMON,
+	Color.DARK_OLIVE_GREEN
+]
+
 const DEFAULT_TYPE = TaskTypes.UNKNOWN
-const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/checkmark.tres")
+
+const FIXED_MESH_COLOR = Color.LIME_GREEN
+const MARKER_ARROW_COLOR = Color.YELLOW
+
+const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/CheckMark.obj")
 
 ## Short description
 @export_multiline var description: String = "Task description here":
@@ -106,9 +106,14 @@ var _initialized := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if not _initialized:
-		call_deferred("_setup")
-		_initialized = true
+	if OS.is_debug_build():
+		if not _initialized:
+			_setup.call_deferred()
+			_initialized = true
+	else:
+		visible = false
+		push_warning("Task marker (name: " + name + ") present in scene " + owner.name + " in production build. Hiding.")
+		queue_free.call_deferred()
 
 
 func get_color() -> Color:
@@ -131,6 +136,10 @@ func get_task_type_name() -> String:
 
 
 func _setup() -> void:
+	(%MarkerArrow as MeshInstance3D).set_instance_shader_parameter("color", MARKER_ARROW_COLOR)
+	var task_type_mesh_inst := %TaskTypeMesh as MeshInstance3D
+	task_type_mesh_inst.mesh = MESHES[TaskTypes.UNKNOWN]
+	task_type_mesh_inst.set_instance_shader_parameter("color", COLORS[TaskTypes.UNKNOWN])
 	_update_label()
 	_update_mesh()
 
@@ -138,12 +147,16 @@ func _setup() -> void:
 func _update_label():
 	if label_3d:
 		label_3d.text = description + "\n\n" + details
-		
+
 
 func _update_mesh():
+	var mesh_instance := %TaskTypeMesh as MeshInstance3D
 	if fixed:
-		(%TaskTypeMesh as MeshInstance3D).mesh = FIXED_MESH
+		mesh_instance.mesh = FIXED_MESH
+		mesh_instance.set_instance_shader_parameter("color", STATUS_COLORS[1])#FIXED_MESH_COLOR)
 	elif task_type >= 0 and task_type <= len(MESHES):
-		(%TaskTypeMesh as MeshInstance3D).mesh = MESHES[task_type]
+		mesh_instance.mesh = MESHES[task_type]
+		mesh_instance.set_instance_shader_parameter("color", get_color())
 	else:
 		push_error("Cannot find mesh - out of bounds. Index (from task type) = " + str(int(task_type)))
+	

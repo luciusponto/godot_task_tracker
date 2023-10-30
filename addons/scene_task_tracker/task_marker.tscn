@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cn8mw3h8uya21"]
+[gd_scene load_steps=5 format=3 uid="uid://cn8mw3h8uya21"]
 
 [ext_resource type="Script" path="res://addons/scene_task_tracker/scripts/task_marker.gd" id="1_qvq5q"]
-[ext_resource type="ArrayMesh" uid="uid://dmgg3ua2c1g2g" path="res://addons/scene_task_tracker/model/markers/mesh/unknown.tres" id="3_3ixbk"]
-[ext_resource type="PackedScene" uid="uid://de8jdfwu3x5vb" path="res://addons/scene_task_tracker/model/markers/Marker Arrow.glb" id="3_lmnyk"]
+[ext_resource type="Material" uid="uid://bsljevnb8f21t" path="res://addons/scene_task_tracker/model/markers/materials/task_marker.tres" id="3_c4non"]
+[ext_resource type="ArrayMesh" uid="uid://bax2hcl6eto54" path="res://addons/scene_task_tracker/model/markers/mesh/Marker Arrow.obj" id="4_1avmi"]
+[ext_resource type="ArrayMesh" uid="uid://bc4ciywufmfxx" path="res://addons/scene_task_tracker/model/markers/mesh/UnknownMarker.obj" id="5_rlhng"]
 
 [node name="task_marker" type="Node3D" groups=["bug_marker"]]
 script = ExtResource("1_qvq5q")
@@ -20,8 +21,13 @@ vertical_alignment = 2
 autowrap_mode = 3
 width = 250.0
 
-[node name="Marker Arrow" parent="." instance=ExtResource("3_lmnyk")]
+[node name="MarkerArrow" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+material_override = ExtResource("3_c4non")
+mesh = ExtResource("4_1avmi")
 
 [node name="TaskTypeMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-mesh = ExtResource("3_3ixbk")
+material_override = ExtResource("3_c4non")
+instance_shader_parameters/color = Color(1, 1, 1, 1)
+mesh = ExtResource("5_rlhng")

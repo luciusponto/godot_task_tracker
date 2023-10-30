@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bysf7nqyqsldt"
+path="res://.godot/imported/BugMarkerNew.obj-95735951ae7d90b888beecacb6754acd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/BugMarkerNew.obj-95735951ae7d90b888beecacb6754acd.mesh"]
+
+source_file="res://addons/scene_task_tracker/model/markers/mesh/BugMarkerNew.obj"
+dest_files=["res://.godot/imported/BugMarkerNew.obj-95735951ae7d90b888beecacb6754acd.mesh", "res://.godot/imported/BugMarkerNew.obj-95735951ae7d90b888beecacb6754acd.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

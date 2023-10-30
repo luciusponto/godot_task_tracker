@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://domcg6hx2lmto"
+path="res://.godot/imported/RegTestMarker.obj-0ab02b2b4314d3c2c45c1c8fd31fe80c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/RegTestMarker.obj-0ab02b2b4314d3c2c45c1c8fd31fe80c.mesh"]
+
+source_file="res://addons/scene_task_tracker/model/markers/mesh/RegTestMarker.obj"
+dest_files=["res://.godot/imported/RegTestMarker.obj-0ab02b2b4314d3c2c45c1c8fd31fe80c.mesh", "res://.godot/imported/RegTestMarker.obj-0ab02b2b4314d3c2c45c1c8fd31fe80c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
