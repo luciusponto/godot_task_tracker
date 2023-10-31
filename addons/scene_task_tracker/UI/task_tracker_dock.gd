@@ -51,6 +51,8 @@ func _exit_tree():
 
 func _ready():
 	%RefreshButton.pressed.connect(_on_refresh_button_pressed)
+	%CopyDescrButton.pressed.connect(_on_copy_descr_button_pressed)
+	%ItemList.item_selected.connect(_on_item_selected)
 	_nodes_popup = (%NodesMenuButton as MenuButton).get_popup()
 	_nodes_popup.id_pressed.connect(_on_nodes_popup_menu_id_pressed)
 	_nodes_popup.hide_on_checkable_item_selection = false
@@ -74,7 +76,24 @@ func _process(_delta):
 	if _is_dirty and Time.get_ticks_msec() > _next_refresh_time:
 		_next_refresh_time = Time.get_ticks_msec() + REFRESH_PERIOD_MS
 		_refresh()
-	
+
+
+func _on_copy_descr_button_pressed():
+	var selected_items = %ItemList.get_selected_items()
+	print(str(len(selected_items)))
+	if len(selected_items) > 0:
+		var inst_id = _item_data[selected_items[0]]
+		var instance = instance_from_id(inst_id)
+		print(str(instance))
+		if instance and instance is BUG_MARKER:
+			DisplayServer.clipboard_set((instance as BUG_MARKER).description)
+
+
+func _on_item_selected(index: int):
+	%CopyDescrButton.disabled = false
+	var inst_id = _item_data[index]
+	_node_selector.on_selection_requested(inst_id)
+
 
 func _on_tree_changed():
 	get_tree()
@@ -158,6 +177,8 @@ func _enabled_in_interface(marker: BUG_MARKER) -> bool:
 		
 func _refresh():
 	_is_dirty = false
+	%CopyDescrButton.disabled = true
+	
 	var trigger_desc := "Refresh triggered by: "
 	for key in DIRTY_FLAGS.keys():
 		var flag = DIRTY_FLAGS.get(key)
@@ -165,7 +186,6 @@ func _refresh():
 			trigger_desc += str(key).to_lower().capitalize() + ", "
 	_dirty_flags = 0
 	
-	%CopyDescrButton.disabled = true
 	if not _filter_popup:
 #		print("Task panel not ready to refresh")
 		return
@@ -188,7 +208,10 @@ func _refresh():
 #			items.append(item)
 #	items.sort_custom(func(a, b): return a.task_priority > b.task_priority)
 	items.sort_custom(func(a : BUG_MARKER, b : BUG_MARKER): return a.priority > b.priority)
+	var item_index: int = 0
 	for old_item_inst_id in _item_data:
+		print("item index: " + str(item_index))
+		item_index += 1
 		var old_item = instance_from_id(old_item_inst_id)
 		if old_item and old_item is BUG_MARKER:
 			var old_task = old_item as BUG_MARKER
@@ -196,7 +219,6 @@ func _refresh():
 	_item_data.clear()
 	%ItemList.clear()
 	for item in items:
-		pass
 #		%RootVBoxContainer.add_child(item)
 #		var separator := HSeparator.new()
 #		%RootVBoxContainer.add_child(separator)
