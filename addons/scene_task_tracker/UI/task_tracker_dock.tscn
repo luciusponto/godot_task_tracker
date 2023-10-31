@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bpjfcyqpnc1n5"]
+[gd_scene load_steps=12 format=3 uid="uid://bpjfcyqpnc1n5"]
 
 [ext_resource type="Script" path="res://addons/scene_task_tracker/UI/task_tracker_dock.gd" id="1_rbxm5"]
 [ext_resource type="Texture2D" uid="uid://bh4no21x6tmjn" path="res://addons/scene_task_tracker/icons/filter.svg" id="2_62ycd"]
@@ -10,10 +10,14 @@
 [ext_resource type="Texture2D" uid="uid://cq1d4dpsns8sk" path="res://addons/scene_task_tracker/icons/pending.svg" id="8_jmbbs"]
 [ext_resource type="Texture2D" uid="uid://ddn5r3wsuq0b3" path="res://addons/scene_task_tracker/icons/checkmark.svg" id="9_4ase0"]
 [ext_resource type="Texture2D" uid="uid://cs7csgfpcb80m" path="res://addons/scene_task_tracker/icons/refresh.svg" id="10_53ics"]
+[ext_resource type="Texture2D" uid="uid://cktd6wyd78ani" path="res://addons/scene_task_tracker/icons/copy.svg" id="11_hf5pu"]
 
 [node name="Tasks" type="MarginContainer"]
-offset_right = 1151.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_rbxm5")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -27,7 +31,6 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Filter contents of task list"
-text = "Filter"
 icon = ExtResource("2_62ycd")
 item_count = 10
 popup/item_0/text = "All"
@@ -72,24 +75,29 @@ popup/item_9/icon = ExtResource("9_4ase0")
 popup/item_9/checkable = 1
 popup/item_9/id = 7
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-
 [node name="RefreshButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Refresh task list"
 icon = ExtResource("10_53ics")
 flat = true
 
-[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-
-[node name="SceneMenuButton2" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
+[node name="CopyDescrButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Perform actions on currently edited scene"
-text = "Task Markers"
+tooltip_text = "Copy selected task's description"
+disabled = true
+icon = ExtResource("11_hf5pu")
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NodesMenuButton" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Perform actions on task marker nodes in currently edited scene"
+text = "Nodes"
 item_count = 12
 popup/item_0/text = "Select All"
 popup/item_0/id = 0
@@ -128,6 +136,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/Panel"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,7 +148,24 @@ horizontal_scroll_mode = 0
 
 [node name="RootVBoxContainer" type="VBoxContainer" parent="VBoxContainer/Panel/ScrollContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 1
+
+[node name="ScrollContainer2" type="ScrollContainer" parent="VBoxContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ItemList" type="ItemList" parent="VBoxContainer/Panel/ScrollContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3

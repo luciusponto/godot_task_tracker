@@ -9,7 +9,6 @@
 script = ExtResource("1_qvq5q")
 description = "Fix: problem with the thing"
 priority = 1
-priority_en = 1
 status = 0
 
 [node name="Label3D" type="Label3D" parent="."]

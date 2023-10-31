@@ -19,9 +19,8 @@ func setup(target_task):
 	task_instance_id = task.get_instance_id()
 	%DescriptionButton.text = task.description
 	%DescriptionButton.tooltip_text = task.description
-	var status_icon_index = 1 if task.fixed else 0
-	%StatusIcon.texture = STATUS_ICONS[status_icon_index]
-	%StatusIcon.modulate = BUG_MARKER.STATUS_COLORS[status_icon_index]
+	%StatusIcon.texture = _get_elem(STATUS_ICONS, task.status, STATUS_ICONS[0])
+	%StatusIcon.modulate = _get_elem(BUG_MARKER.STATUS_COLORS, task.status, BUG_MARKER.STATUS_COLORS[0])
 	%StatusIcon.tooltip_text = "Status: " + task.get_status_string().to_lower()
 	%TaskTypeIcon.texture = task.get_icon()
 	%TaskTypeIcon.modulate = task.get_color()
@@ -29,6 +28,12 @@ func setup(target_task):
 	%PriorityLabel.text = str(task.priority + 1)
 	%PriorityLabel.tooltip_text = "Priority: " + str(task.get_priority_string().to_lower().capitalize())
 	task_priority = task.priority
+	
+
+func _get_elem(array: Array, index: int, default):
+	if index >= 0 and index <= len(array) - 1:
+		return array[index]
+	return default
 
 
 func _on_description_button_pressed():

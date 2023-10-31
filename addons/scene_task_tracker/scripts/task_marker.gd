@@ -92,8 +92,8 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/C
 		return task_type
 	set(value):
 		task_type = value
-		task_changed.emit()
 		_update_mesh()
+		task_changed.emit()
 
 
 ## Task priority
@@ -104,22 +104,6 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/C
 		priority = value
 		task_changed.emit()
 
-## Task priority
-@export var priority_en := Priority.UNKNOWN:
-	get:
-		return priority_en
-	set(value):
-		priority_en = value
-		task_changed.emit()
-
-## Set to true if the task has been completed
-@export var fixed: bool = false:
-	get:
-		return fixed
-	set(value):
-		fixed = value
-		_update_mesh()
-		task_changed
 
 ## Task status
 @export var status := Status.UNKNOWN:
@@ -128,7 +112,7 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/C
 	set(value):
 		status = value
 		_update_mesh()
-		task_changed
+		task_changed.emit()
 
 @onready var label_3d = %Label3D
 
@@ -138,7 +122,6 @@ var _initialized := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	priority = priority_en
 	if OS.is_debug_build():
 		if not _initialized:
 			_setup.call_deferred()
@@ -176,12 +159,6 @@ func get_status_string() -> String:
 	return Status.keys()[status]
 
 
-#func _migrate_enums():
-#	print(name + " - priority: " + Priority.keys()[priority] + "; status: " + Status.keys()[status])
-#	priority_en = priority - 1
-#	status = Status.COMPLETED if fixed else Status.PENDING
-
-
 func _setup() -> void:
 	(%MarkerArrow as MeshInstance3D).set_instance_shader_parameter("color", MARKER_ARROW_COLOR)
 	var task_type_mesh_inst := %TaskTypeMesh as MeshInstance3D
@@ -197,8 +174,10 @@ func _update_label():
 
 
 func _update_mesh():
+	if not has_node("TaskTypeMesh"):
+		return
 	var mesh_instance := %TaskTypeMesh as MeshInstance3D
-	if fixed:
+	if status == Status.COMPLETED:
 		mesh_instance.mesh = FIXED_MESH
 		mesh_instance.set_instance_shader_parameter("color", STATUS_COLORS[1])#FIXED_MESH_COLOR)
 	elif task_type >= 0 and task_type <= len(MESHES):

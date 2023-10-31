@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://byy3gbb7jx8by"]
+[gd_scene load_steps=2 format=3 uid="uid://byy3gbb7jx8by"]
 
 [ext_resource type="Script" path="res://addons/scene_task_tracker/UI/task_item_bt.gd" id="1_6rc8t"]
-[ext_resource type="Texture2D" uid="uid://cktd6wyd78ani" path="res://addons/scene_task_tracker/icons/copy.svg" id="2_y3aml"]
 
 [node name="HBoxContainer" type="HBoxContainer"]
 anchors_preset = 10
@@ -42,13 +41,6 @@ unique_name_in_owner = true
 layout_mode = 2
 expand_mode = 3
 
-[node name="CopyDescrButton" type="Button" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Copy description to clipboard"
-icon = ExtResource("2_y3aml")
-flat = true
-
 [node name="DescriptionLabel" type="Label" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -67,5 +59,4 @@ flat = true
 alignment = 0
 text_overrun_behavior = 3
 
-[connection signal="pressed" from="CopyDescrButton" to="." method="_on_copy_descr_button_pressed"]
 [connection signal="pressed" from="DescriptionButton" to="." method="_on_description_button_pressed"]
