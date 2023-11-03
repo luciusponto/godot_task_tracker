@@ -13,10 +13,8 @@ enum DIRTY_FLAGS {
 }
 
 enum TASK_TREE_COLUMN {
-#	TYPE,
 	DESCRIPTION,
 	PRIORITY,
-#	STATUS,
 }
 
 const REFRESH_PERIOD_MS: int = 2000
@@ -26,13 +24,11 @@ const BUG_MARKER = preload("res://addons/scene_task_tracker/scripts/task_marker.
 const TASK_TYPE = preload("res://addons/scene_task_tracker/scripts/task_marker.gd").TaskTypes
 const TASK_ST = preload("res://addons/scene_task_tracker/scripts/task_marker.gd").Status
 
-const ITEM = preload("res://addons/scene_task_tracker/UI/task_item_bt.gd")
 const NODE_SELECTOR_R = preload("res://addons/scene_task_tracker/UI/node_selector.gd")
 
 const SEL_SCENE_ONLY_ID: int = 30
 const SEL_SUBSCENES_ID: int = 31
 
-#var _item_resource = preload("res://addons/scene_task_tracker/UI/task_item_bt.tscn")
 var _item_data : Array[int] = []
 var _edited_root: Node
 var _dirty_flags: int
@@ -45,27 +41,16 @@ var _nodes_popup: PopupMenu
 var _filter_popup: PopupMenu
 
 var _select_from_scene_only := true
+
 var _selection_count: int
 var _first_selected_index: int = -1
-#var _selected_item_indices: Array[int] = []
 var _task_selection_status: Array[bool] = []
-#var _selection_dirty := false
-
-
-func _enter_tree():
-	_node_selector = NODE_SELECTOR_R.new()
-#	get_tree().tree_changed.connect(_on_tree_changed)
-
-
-func _exit_tree():
-#	get_tree().tree_changed.disconnect(_on_tree_changed)
-	pass
 
 
 func _ready():
+	_node_selector = NODE_SELECTOR_R.new()
 	%RefreshButton.pressed.connect(_on_refresh_button_pressed)
 	%CopyDescrButton.pressed.connect(_on_copy_descr_button_pressed)
-#	%ItemList.item_selected.connect(_on_item_selected)
 	var tree_control = %Tree
 	tree_control.multi_selected.connect(_on_multi_selected)
 	tree_control.columns = 2
@@ -101,25 +86,21 @@ func _process(_delta):
 
 
 func _on_copy_descr_button_pressed():
-#	var selected_items = %ItemList.get_selected_items()
-#	print(str(len(selected_items)))
-#	if len(selected_items) > 0:
 	var inst_id = _item_data[_first_selected_index]
 	var instance = instance_from_id(inst_id)
-#	print(str(instance))
 	if instance and instance is BUG_MARKER:
 		DisplayServer.clipboard_set((instance as BUG_MARKER).description)
 
 
-func _on_item_selected(index: int):
-	%CopyDescrButton.disabled = false
-	var inst_id = _item_data[index]
-	_node_selector.on_selection_requested(inst_id)
+#func _on_item_selected(index: int):
+#	%CopyDescrButton.disabled = false
+#	var inst_id = _item_data[index]
+#	_node_selector.on_selection_requested(inst_id)
 
 
-func _on_tree_changed():
-	get_tree()
-	_dirty_flags |= DIRTY_FLAGS.TREE_CHANGED
+#func _on_tree_changed():
+#	get_tree()
+#	_dirty_flags |= DIRTY_FLAGS.TREE_CHANGED
 
 
 func _check_edited_scene_change():
@@ -136,9 +117,9 @@ func _check_edited_scene_change():
 			_disconnect_safe(_edited_root.child_entered_tree, _on_edited_scene_child_added)
 			_disconnect_safe(_edited_root.child_exiting_tree, _on_edited_scene_child_removed)
 		if new_edited_root:
-			_connect_safe(_edited_root.tree_exited, _on_edited_root_exited_tree)
-			_connect_safe(_edited_root.child_entered_tree, _on_edited_scene_child_added)
-			_connect_safe(_edited_root.child_exiting_tree, _on_edited_scene_child_removed)
+			_connect_safe(new_edited_root.tree_exited, _on_edited_root_exited_tree)
+			_connect_safe(new_edited_root.child_entered_tree, _on_edited_scene_child_added)
+			_connect_safe(new_edited_root.child_exiting_tree, _on_edited_scene_child_removed)
 		_edited_root = new_edited_root
 
 
@@ -153,7 +134,6 @@ func _connect_safe(target_signal: Signal, target_function: Callable):
 
 
 func _on_edited_root_exited_tree():
-#	print(_edited_root.name + " exited tree")
 	_check_edited_scene_change.call_deferred()
 
 
@@ -232,105 +212,53 @@ func _refresh():
 	_dirty_flags = 0
 	
 	if not _filter_popup:
-#		print("Task panel not ready to refresh")
+		print(Time.get_time_string_from_system() + " - Task panel not ready to refresh")
 		return
 	var start_time_us = Time.get_ticks_usec()
-#	print(Time.get_time_string_from_system() + " - Refreshing Tasks panel")
-	for child in %RootVBoxContainer.get_children():
-		if child is ITEM:
-			var item = child as ITEM
-			item.select_requested.disconnect(_node_selector.on_selection_requested)
-		child.queue_free()
-	var bug_markers = _get_markers_from_scene()
-#	var items = []
-	var items : Array[BUG_MARKER] = []
-	for marker in bug_markers:
-		if _enabled_in_interface(marker):
-			items.append(marker)
-#			var item: ITEM = _item_resource.instantiate()
-#			item.setup(marker)
-#			item.select_requested.connect(_node_selector.on_selection_requested)
-#			items.append(item)
-#	items.sort_custom(func(a, b): return a.task_priority > b.task_priority)
-	items.sort_custom(func(a : BUG_MARKER, b : BUG_MARKER): return a.get_sort_score() > b.get_sort_score())
-	_task_selection_status.resize(len(items))
-	_task_selection_status.fill(false)
+	
 	for old_item_inst_id in _item_data:
 		var old_item = instance_from_id(old_item_inst_id)
 		if old_item and old_item is BUG_MARKER:
 			var old_task = old_item as BUG_MARKER
 			old_task.task_changed.disconnect(_on_task_marker_changed)
+
+	var bug_markers = _get_markers_from_scene()
+	var items : Array[BUG_MARKER] = []
+	for marker in bug_markers:
+		if _enabled_in_interface(marker):
+			items.append(marker)
+	items.sort_custom(func(a : BUG_MARKER, b : BUG_MARKER): return a.get_sort_score() > b.get_sort_score())
+	_task_selection_status.resize(len(items))
+	_task_selection_status.fill(false)
 	_item_data.clear()
 	_selection_count = 0
-#	%ItemList.clear()
-#	%ItemList.max_columns = 4
+
 	var tree_control: Tree = %Tree
-	tree_control.clear()
-#	tree_control.set_column_expand(2, false)
-#	tree_control.set_column_expand(0, true)
-#	%Tree.set_column_expand(TASK_TREE_COLUMN.TYPE, false)
-#	%Tree.set_column_expand(TASK_TREE_COLUMN.PRIORITY, false)
-#	%Tree.set_column_expand(TASK_TREE_COLUMN.STATUS, false)
 	const OVERRUN_BEHAVIOUR: TextServer.OverrunBehavior = TextServer.OverrunBehavior.OVERRUN_TRIM_ELLIPSIS
-#	const AUTOWRAP_MODE: TextServer.AutowrapMode = 0
+	tree_control.clear()
 	tree_control.set_column_expand(TASK_TREE_COLUMN.DESCRIPTION, true)
 	var root: TreeItem = tree_control.create_item()
-#	root.set_cell_mode(TASK_TREE_COLUMN.DESCRIPTION, TreeItem.CELL_MODE_STRING)
-#	root.set_text(TASK_TREE_COLUMN.DESCRIPTION, "Root")
-#	root.set_text_overrun_behavior(TASK_TREE_COLUMN.DESCRIPTION, OVERRUN_BEHAVIOUR)
-#	root.set_autowrap_mode(TASK_TREE_COLUMN.DESCRIPTION, AUTOWRAP_MODE)
-#	root.set_autowrap_mode(1, AUTOWRAP_MODE)
-#	root.set_cell_mode(1, TreeItem.CELL_MODE_STRING)
-#	root.set_text(1, "Test")
+
 	for item in items:
-#		%RootVBoxContainer.add_child(item)
-#		var separator := HSeparator.new()
-#		%RootVBoxContainer.add_child(separator)
 		_item_data.append(item.get_instance_id())
 		item.task_changed.connect(_on_task_marker_changed)
-		
-#		var index = %ItemList.add_icon_item(item.get_icon())
-#		%ItemList.set_item_icon_modulate(index, item.get_color())
-#		index = %ItemList.add_icon_item(item.get_priority_icon())
-#		%ItemList.set_item_icon_modulate(index, item.get_priority_color())
-#		index = %ItemList.add_icon_item(item.get_status_icon())
-#		%ItemList.set_item_icon_modulate(index, item.get_status_color())
-#		%ItemList.add_item(item.description)
-
-		
 		var tree_item: TreeItem = tree_control.create_item(root)
-#		tree_item.set_cell_mode(TASK_TREE_COLUMN.TYPE, TreeItem.CELL_MODE_ICON)
 		tree_item.set_cell_mode(TASK_TREE_COLUMN.PRIORITY, TreeItem.CELL_MODE_ICON)
 		tree_item.set_cell_mode(TASK_TREE_COLUMN.DESCRIPTION, TreeItem.CELL_MODE_STRING)
-		
-#		root.set_autowrap_mode(0, AUTOWRAP_MODE)
-#		root.set_autowrap_mode(1, AUTOWRAP_MODE)
-		
-		
+
 		tree_item.set_icon(TASK_TREE_COLUMN.DESCRIPTION, item.get_icon())
 		tree_item.set_icon_modulate(TASK_TREE_COLUMN.DESCRIPTION, item.get_color())
-#		var desc_tooltip: String = "Type: " + item.get_task_type_name().to_lower().capitalize()
-#		desc_tooltip += " - " + item.description
 		tree_item.set_tooltip_text(TASK_TREE_COLUMN.DESCRIPTION, item.get_task_type_name().to_lower().capitalize())
 		tree_item.set_text(TASK_TREE_COLUMN.DESCRIPTION, item.description)
 		tree_item.set_tooltip_text(TASK_TREE_COLUMN.DESCRIPTION, item.description)
 		tree_item.set_text_overrun_behavior(TASK_TREE_COLUMN.DESCRIPTION, OVERRUN_BEHAVIOUR)
+		
 		var prior_icon: Texture2D = item.get_priority_icon(true)
 		var pr_tooltip: String = "Priority: " + item.get_priority_string().to_lower().capitalize()
 		pr_tooltip += "; Status: " + item.get_status_string().to_lower().capitalize()
 		tree_item.set_tooltip_text(TASK_TREE_COLUMN.PRIORITY, pr_tooltip)
 		tree_item.set_icon(TASK_TREE_COLUMN.PRIORITY, prior_icon)
-#		tree_item.set_icon_max_width(TASK_TREE_COLUMN.PRIORITY, 8)
 		tree_item.set_icon_modulate(TASK_TREE_COLUMN.PRIORITY, item.get_priority_color(true))
-#		var completed: bool = item.status == BUG_MARKER.Status.COMPLETED
-#		if item.status == BUG_MARKER.Status.COMPLETED:
-#			tree_item.set_cell_mode(TASK_TREE_COLUMN.STATUS, TreeItem.CELL_MODE_ICON)
-#			tree_item.set_tooltip_text(TASK_TREE_COLUMN.STATUS, item.get_status_string())
-#			tree_item.set_icon(TASK_TREE_COLUMN.STATUS, item.get_status_icon())
-#			tree_item.set_icon_modulate(TASK_TREE_COLUMN.STATUS, item.get_status_color())
-#			tree_item.set_icon_max_width(TASK_TREE_COLUMN.STATUS, 16)
-#		else:
-#			tree_item.set_cell_mode(TASK_TREE_COLUMN.STATUS, TreeItem.CELL_MODE_STRING)
 		
 	var time_taken_us = Time.get_ticks_usec() - start_time_us
 	print(Time.get_time_string_from_system() + " - Refreshed Tasks panel (" + str(float(time_taken_us) / 1000) + " ms)")
@@ -339,7 +267,8 @@ func _refresh():
 
 func _refresh_node_selection():
 	var selected_items: Array[Node] = []
-	for i in range(0, len(_task_selection_status)):
+	var task_count: int = len(_task_selection_status)
+	for i in range(0, task_count):
 		if _task_selection_status[i]:
 			var inst_id = _item_data[i]
 			var node = instance_from_id(inst_id)
@@ -350,36 +279,18 @@ func _refresh_node_selection():
 func _on_multi_selected(item: TreeItem, column: int, selected: bool):
 	if column != 0:
 		return
-	# TODO: select nodes corresponding to selected items, deselect nodes corresponding to deselected items
-#	var selected_nodes
-#	_node_selector.set_selection()
-#	var tree_control := %Tree as Tree
-#	var root = (%Tree as Tree).get_root()
 	var index = item.get_index()
-#	var node = instance_from_id(_item_data[index])
-#	_selection_count += 1 if selected else -1
-#	if _selection_count == 0 and selected:
-#		_node_selector.clear_selection()
-#	if tree_control.get_selected()
 	_task_selection_status[index] = selected
 	_selection_count += 1 if selected else -1
-	print("Selected items: " + str(_selection_count))
 	if _selection_count == 1:
 		_first_selected_index = index
 	%CopyDescrButton.disabled = _selection_count == 0
-		
-#	if selected:
-#		_node_selector.add_to_selection(node)
-#	else:
-#		_selected_item_indices.erase(index)
-#		_node_selector.remove_from_selection(node)
-#	_selection_dirty = true
-	_refresh_node_selection.call_deferred()
-#	print(str(item) + ", col: " + str(column) + " selected: " + str(selected))
-	
+	_refresh_node_selection()#.call_deferred()
+
 
 func _on_task_marker_changed():
 	_dirty_flags |= DIRTY_FLAGS.TASK_NODE_CHANGED
+
 
 func _get_markers_from_scene() -> Array[BUG_MARKER]:
 	var scene_tree = get_tree()

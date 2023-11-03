@@ -34,7 +34,7 @@ func set_selection(selected_nodes: Array[Node]):
 	var selection = get_selection()
 	selection.clear()
 	for node in selected_nodes:
-		selection.add_node(node)	
+		selection.add_node(node)
 
 
 func show_selected():
