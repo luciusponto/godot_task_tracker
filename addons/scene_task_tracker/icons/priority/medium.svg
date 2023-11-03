@@ -28,91 +28,19 @@
   <g
      id="g454"
      transform="translate(0,-161.53332)"
-     style="display:none">
+     style="display:inline">
     <rect
-       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.529167;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.529169;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="rect5001"
        width="1.0583333"
-       height="2.1166666"
+       height="1.5875052"
        x="0.52916664"
-       y="-164.18127"
+       y="-165.50208"
        transform="scale(1,-1)" />
     <path
-       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.696984;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.674309;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
        id="path5003"
        d="m 4.8729834,9.236068 -7.7459668,0 L 1,2.527864 Z"
-       transform="matrix(0.20494536,0,0,-0.19689164,0.85338795,165.99979)" />
-  </g>
-  <g
-     id="layer1"
-     transform="translate(0,-161.53332)"
-     style="display:none">
-    <g
-       id="g5029"
-       transform="matrix(1,0,0,-1,0,327.85807)">
-      <rect
-         style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.529167;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-         id="rect5019"
-         width="0.52916682"
-         height="1.5875063"
-         x="0.79374987"
-         y="163.64999" />
-      <path
-         style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.966922;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-         id="path5021"
-         d="m 4.8729834,9.236068 -7.7459668,0 L 1,2.527864 Z"
-         transform="matrix(0.13663024,0,0,0.15345634,0.92170307,162.23265)" />
-    </g>
-  </g>
-  <g
-     id="g456"
-     transform="matrix(0.64036693,0,0,0.64036693,0.38061166,-102.63798)"
-     style="display:inline;stroke-width:1.5616">
-    <rect
-       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.826349;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="rect5013"
-       width="0.82634938"
-       height="1.2395082"
-       x="0.64515859"
-       y="163.99855" />
-    <path
-       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.966922;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="path5015"
-       d="m 4.8729834,9.236068 -7.7459668,0 L 1,2.527864 Z"
-       transform="matrix(0.21336242,0,0,0.23963814,0.84497089,161.78522)" />
-  </g>
-  <g
-     id="g458"
-     transform="translate(0,-161.53332)"
-     style="display:none">
-    <rect
-       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.529167;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="rect5007"
-       width="0.52916682"
-       height="1.5875063"
-       x="0.79374987"
-       y="163.64999" />
-    <path
-       style="display:inline;fill:#ffffff;stroke:none;stroke-width:0.966922;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="path5009"
-       d="m 4.8729834,9.236068 -7.7459668,0 L 1,2.527864 Z"
-       transform="matrix(0.13663024,0,0,0.15345634,0.92170307,162.23265)" />
-  </g>
-  <g
-     id="g452"
-     transform="translate(0,-161.53332)"
-     style="display:none">
-    <rect
-       style="fill:#ffffff;stroke:none;stroke-width:0.529167;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="rect4945"
-       width="1.0583333"
-       height="2.1166666"
-       x="0.52916664"
-       y="163.38541" />
-    <path
-       style="fill:#ffffff;stroke:none;stroke-width:0.696984;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
-       id="path4999"
-       d="m 4.8729834,9.236068 -7.7459668,0 L 1,2.527864 Z"
-       transform="matrix(0.20494536,0,0,0.19689164,0.85338796,161.5669)" />
+       transform="matrix(0.27326049,0,0,0.15776703,0.78507283,162.45742)" />
   </g>
 </svg>

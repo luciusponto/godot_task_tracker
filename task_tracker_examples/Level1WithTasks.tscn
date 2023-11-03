@@ -60,12 +60,12 @@ priority = 0
 transform = Transform3D(0.999995, -0.00289915, 0.000857807, 0.00289731, 0.999994, 0.00213426, -0.000863997, -0.00213177, 0.999997, -8.82823, 3.5, 12.2662)
 description = "Add player prefab to level"
 task_type = 0
-priority = 0
 status = 1
 
 [node name="Completed - 20231027" parent="Tasks/Completed" instance=ExtResource("3_smny1")]
 
 [node name="task_marker" parent="." instance=ExtResource("2_brofy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 18)
+description = "Fix: problem with the thing.  More words to make description long."
 task_type = 0
 priority = 0

@@ -23,6 +23,10 @@ gdscript/warnings/exclude_addons=false
 
 enabled=PackedStringArray("res://addons/scene_task_tracker/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 anti_aliasing/quality/msaa_3d=3

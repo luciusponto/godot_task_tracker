@@ -7,20 +7,14 @@
 [node name="task_marker2" parent="." instance=ExtResource("1_r5lit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -6)
 description = "Completed task 1"
-priority_en = 1
-fixed = true
 status = 1
 
 [node name="task_marker3" parent="." instance=ExtResource("1_r5lit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 1, -6)
 description = "Completed task 2"
-priority_en = 1
-fixed = true
 status = 1
 
 [node name="task_marker4" parent="." instance=ExtResource("1_r5lit")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -4)
 description = "Completed task 3"
-priority_en = 1
-fixed = true
 status = 1

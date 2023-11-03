@@ -1,4 +1,4 @@
-@tool
+#@tool
 extends Control
 
 signal select_requested(node_instanceid: int)

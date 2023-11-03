@@ -1,6 +1,11 @@
 @tool
 extends EditorScript
 
+func clear_selection():
+	var selection = get_selection()
+	selection.clear()
+
+
 func on_selection_requested(inst_id: int):
 	var node = instance_from_id(inst_id)
 	if node:
@@ -8,6 +13,16 @@ func on_selection_requested(inst_id: int):
 		var selection = interface.get_selection()
 		selection.clear()
 		selection.add_node(node)
+
+
+func add_to_selection(node: Node):
+	var selection = get_selection()
+	selection.add_node(node)
+
+
+func remove_from_selection(node: Node):
+	var selection = get_selection()
+	selection.remove_node(node)
 
 
 func get_selection() -> EditorSelection:

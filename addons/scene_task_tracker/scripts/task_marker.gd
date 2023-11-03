@@ -45,6 +45,28 @@ const ICONS = [
 	preload("res://addons/scene_task_tracker/icons/unkown.svg")
 ]
 
+const PRIORITY_ICONS = [
+#	preload("res://addons/scene_task_tracker/icons/priority/very_low.svg"),
+#	preload("res://addons/scene_task_tracker/icons/priority/low.svg"),
+#	preload("res://addons/scene_task_tracker/icons/priority/medium.svg"),
+#	preload("res://addons/scene_task_tracker/icons/priority/high.svg"),
+#	preload("res://addons/scene_task_tracker/icons/priority/very_high.svg"),
+	preload("res://addons/scene_task_tracker/icons/priority/_Very_Low.svg"),
+	preload("res://addons/scene_task_tracker/icons/priority/_Low.svg"),
+	preload("res://addons/scene_task_tracker/icons/priority/_Medium.svg"),
+	preload("res://addons/scene_task_tracker/icons/priority/_High.svg"),
+	preload("res://addons/scene_task_tracker/icons/priority/_Very_High.svg"),
+]
+
+
+const PRIORITY_COLORS = [
+	Color.DARK_OLIVE_GREEN,
+	Color.DARK_SEA_GREEN,
+	Color.GOLDENROD,
+	Color.DARK_ORANGE,
+	Color.ORANGE_RED,
+]
+
 const COLORS = [
 	Color.CORAL,
 	Color.AQUAMARINE,
@@ -54,9 +76,15 @@ const COLORS = [
 	Color.MAGENTA,
 ]
 
+const STATUS_ICONS = [
+	preload("res://addons/scene_task_tracker/icons/pending.svg"),
+#	preload("res://addons/scene_task_tracker/icons/checkmark.svg")
+	preload("res://addons/scene_task_tracker/icons/priority/_Completed.svg"),
+]
+
 const STATUS_COLORS = [
 	Color.DARK_SALMON,
-	Color.DARK_OLIVE_GREEN
+	Color.LIME_GREEN
 ]
 
 const DEFAULT_TYPE = TaskTypes.UNKNOWN
@@ -116,7 +144,7 @@ const FIXED_MESH = preload("res://addons/scene_task_tracker/model/markers/mesh/C
 
 @onready var label_3d = %Label3D
 
-var _task_type_meshes: Array[Node3D] = []
+#var _task_type_meshes: Array[Node3D] = []
 var _initialized := false
 
 
@@ -133,22 +161,28 @@ func _ready():
 
 
 func get_color() -> Color:
-	if task_type > len(COLORS) - 1:
-		return COLORS[DEFAULT_TYPE]
-	return COLORS[task_type]
+	return _get_elem(COLORS, task_type, DEFAULT_TYPE) as Color
 
 
 func get_icon() -> Texture2D:
-	if task_type > len(ICONS) - 1:
-		return ICONS[DEFAULT_TYPE]
-	return ICONS[task_type]
-	
-	
+	return _get_elem(ICONS, task_type, DEFAULT_TYPE) as Texture2D
+
+
+func get_priority_icon(include_status: bool = false) -> Texture2D:
+	if include_status and status == Status.COMPLETED:
+		return get_status_icon()
+	return _get_elem(PRIORITY_ICONS, priority, DEFAULT_PRIORITY) as Texture2D
+
+
+func get_priority_color(include_status: bool = false) -> Color:
+	if include_status and status == Status.COMPLETED:
+		return get_status_color()
+	return _get_elem(PRIORITY_COLORS, priority, DEFAULT_PRIORITY) as Color
+
+
 func get_task_type_name() -> String:
 	var keys = TaskTypes.keys()
-	if task_type > len(keys):
-		return keys[DEFAULT_TYPE]
-	return keys[task_type]
+	return _get_elem(keys, task_type, DEFAULT_TYPE) as String
 	
 	
 func get_priority_string() -> String:
@@ -158,6 +192,27 @@ func get_priority_string() -> String:
 func get_status_string() -> String:
 	return Status.keys()[status]
 
+
+func get_status_icon() -> Texture2D:
+	return _get_elem(STATUS_ICONS, status, DEFAULT_STATUS) as Texture2D
+
+
+func get_status_color() -> Color:
+	return _get_elem(STATUS_COLORS, status, DEFAULT_STATUS) as Color
+
+
+func get_sort_score() -> int:
+	var score: int = priority
+	if status == Status.COMPLETED:
+		score -= 10
+	return score
+
+
+func _get_elem(array: Array, index, default_index):
+	if index < 0 or index >= len(array):
+		return array[default_index]
+	return array[index]
+	
 
 func _setup() -> void:
 	(%MarkerArrow as MeshInstance3D).set_instance_shader_parameter("color", MARKER_ARROW_COLOR)
