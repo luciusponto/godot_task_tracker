@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://cmsqcvs87s05c"]
+
+[node name="MainTaskView" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TaskLists" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/TaskLists"]
+layout_mode = 2
+
+[node name="ListRootVBoxContainer" type="VBoxContainer" parent="TabContainer/TaskLists/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer"]
+layout_mode = 2
+text = "Open"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="ListRootVBoxContainer2" type="VBoxContainer" parent="TabContainer/TaskLists/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2"]
+layout_mode = 2
+text = "In Progress"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/TaskLists/HBoxContainer/ListRootVBoxContainer2/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+text = "Example Task
+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ItemList" type="ItemList" parent="TabContainer/HBoxContainer"]
+layout_mode = 2

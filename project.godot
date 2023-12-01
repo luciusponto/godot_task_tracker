@@ -16,6 +16,10 @@ run/main_scene="res://task_tracker_examples/scenes/Level1.tscn"
 config/features=PackedStringArray("4.2")
 config/icon="res://icon.png"
 
+[autoload]
+
+TaskMarkerManager="*res://addons/scene_task_tracker/scripts/task_marker_manager.gd"
+
 [debug]
 
 gdscript/warnings/exclude_addons=false

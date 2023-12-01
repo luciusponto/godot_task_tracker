@@ -20,11 +20,15 @@ enum TASK_TREE_COLUMN {
 const REFRESH_PERIOD_MS: int = 2000
 const SCENE_CHANGE_CHECK_PERIOD_MS: int = 2000
 
-const BUG_MARKER = preload("res://addons/scene_task_tracker/scripts/task_marker.gd")
-const TASK_TYPE = preload("res://addons/scene_task_tracker/scripts/task_marker.gd").TaskTypes
-const TASK_ST = preload("res://addons/scene_task_tracker/scripts/task_marker.gd").Status
+const BUG_MARKER = preload("../scripts/task_marker.gd")
+const TASK = preload("../scripts/task.gd")
+const TASK_TYPE = TASK.TaskTypes
+const TASK_ST = TASK.Status
+const TASK_DATABASE = preload("../scripts/task_database.gd")
+const DEFAULT_TASK_DATABASE_PATH = "res://tasks/task_database.tres"
+const CONFIG_PATH: String = "user://ls_task_tracker.cfg"
 
-const NODE_SELECTOR_R = preload("res://addons/scene_task_tracker/UI/node_selector.gd")
+const NODE_SELECTOR_R = preload("node_selector.gd")
 
 const SEL_SCENE_ONLY_ID: int = 30
 const SEL_SUBSCENES_ID: int = 31
@@ -46,11 +50,38 @@ var _selection_count: int
 var _first_selected_index: int = -1
 var _task_selection_status: Array[bool] = []
 
+var _task_database_path: String
+var _task_database: TASK_DATABASE
+var _config : ConfigFile
+var _edited_task: TASK
+
 
 func _ready():
+	
+	_config = ConfigFile.new()
+	var err = _config.load(CONFIG_PATH)
+	if err == OK:
+		_task_database_path = _config.get_value("database", "path", null)
+	else: # create config file for this project
+		_task_database_path = DEFAULT_TASK_DATABASE_PATH
+		_config.set_value("database", "path", _task_database_path)
+		var save_err = _config.save(CONFIG_PATH)
+		if save_err != OK:
+			push_error("Could not save task tracker config file")
+	
+	_load_database()
+	
+	# TODO: if no task_database has been assigned, only display UI stating so and allowing to set the path to the resource
+	# once the task_database is set, save the path to a config file and display the normal UI
+	
 	_node_selector = NODE_SELECTOR_R.new()
+	%NewTaskButton.pressed.connect(_on_new_task_button_pressed)
 	%RefreshButton.pressed.connect(_on_refresh_button_pressed)
 	%CopyDescrButton.pressed.connect(_on_copy_descr_button_pressed)
+	%TaskEditorWindow.hide()
+	%TaskEditorWindow.close_requested.connect(_on_edited_task_cancel)
+	%TaskEditorCancelButton.pressed.connect(_on_edited_task_cancel)
+	%TaskEditorOkButton.pressed.connect(_on_edited_task_ok)
 	var tree_control = %Tree
 	tree_control.multi_selected.connect(_on_multi_selected)
 	tree_control.columns = 2
@@ -75,7 +106,7 @@ func _ready():
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
+func _process_old(_delta):
 	var now: int = Time.get_ticks_msec()
 	if now > _next_scene_check_time:
 		_check_edited_scene_change()
@@ -83,6 +114,13 @@ func _process(_delta):
 	if _is_dirty and Time.get_ticks_msec() > _next_refresh_time:
 		_next_refresh_time = Time.get_ticks_msec() + REFRESH_PERIOD_MS
 		_refresh()
+
+
+func _load_database():
+	if FileAccess.file_exists(_task_database_path):
+		_task_database = load(_task_database_path)
+	else:
+		push_error("Could not load task database")
 
 
 func _on_copy_descr_button_pressed():
@@ -167,12 +205,27 @@ func _on_filter_pressed(id: int):
 	_dirty_flags |= DIRTY_FLAGS.FILTER_APPLIED
 
 
+func _on_new_task_button_pressed():
+	(%TaskEditorWindow as Window).show()
+	_edited_task = TASK.new()
+	
+
+func _on_edited_task_cancel():
+	(%TaskEditorWindow as Window).hide()
+	# TODO: free task if new task and cancelled
+
+
+func _on_edited_task_ok():
+	(%TaskEditorWindow as Window).hide()
+	# TODO: add / replace edited task to task database, save database
+
+
 func _on_refresh_button_pressed():
 	_dirty_flags |= DIRTY_FLAGS.REFRESH_PRESSED
 	_next_refresh_time = 0 # FORCE instant refresh
 
 
-func _enabled_in_interface(marker: BUG_MARKER) -> bool:
+func _enabled_in_interface(task: TASK) -> bool:
 	var show_bug = _filter_popup.is_item_checked(_filter_popup.get_item_index(0))
 	var show_feature = _filter_popup.is_item_checked(_filter_popup.get_item_index(1))
 	var show_tech_impr = _filter_popup.is_item_checked(_filter_popup.get_item_index(2))
@@ -181,19 +234,19 @@ func _enabled_in_interface(marker: BUG_MARKER) -> bool:
 	var show_unknown = _filter_popup.is_item_checked(_filter_popup.get_item_index(8))
 	var show_pending = _filter_popup.is_item_checked(_filter_popup.get_item_index(6))
 	var show_completed = _filter_popup.is_item_checked(_filter_popup.get_item_index(7))
-	var status_filter = show_completed if marker.status == BUG_MARKER.Status.COMPLETED else show_pending
-	match marker.task_type:
-		BUG_MARKER.TaskTypes.BUG:
+	var status_filter = show_completed if task.status == TASK_ST.COMPLETED else show_pending
+	match task.task_type:
+		TASK_TYPE.BUG:
 			return status_filter and show_bug
-		BUG_MARKER.TaskTypes.FEATURE:
+		TASK_TYPE.FEATURE:
 			return status_filter and show_feature
-		BUG_MARKER.TaskTypes.TECHNICAL_IMPROVEMENT:
+		TASK_TYPE.TECHNICAL_IMPROVEMENT:
 			return status_filter and show_tech_impr
-		BUG_MARKER.TaskTypes.POLISH:
+		TASK_TYPE.POLISH:
 			return status_filter and show_polish
-		BUG_MARKER.TaskTypes.REGRESSION_TEST:
+		TASK_TYPE.REGRESSION_TEST:
 			return status_filter and show_regr_test
-		BUG_MARKER.TaskTypes.UNKNOWN:
+		TASK_TYPE.UNKNOWN:
 			return status_filter and show_unknown
 		_:
 			return false
@@ -365,3 +418,4 @@ func _on_nodes_popup_menu_id_pressed(id):
 		_node_selector.hide_selected()
 	elif id == 16:
 		_node_selector.show_selected()
+

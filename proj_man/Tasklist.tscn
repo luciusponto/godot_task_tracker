@@ -1,32 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://kju055qdvdfr"]
 
-[ext_resource type="PackedScene" uid="uid://cn8mw3h8uya21" path="res://addons/scene_task_tracker/task_marker.tscn" id="1_b8a8s"]
+[ext_resource type="PackedScene" uid="uid://cn8mw3h8uya21" path="res://addons/scene_task_tracker/scenes/task_marker.tscn" id="1_b8a8s"]
 [ext_resource type="Script" path="res://proj_man/arrange_children.gd" id="1_oa4qu"]
 
 [node name="Tasklist" type="Node3D"]
 script = ExtResource("1_oa4qu")
 
 [node name="task_marker" parent="." instance=ExtResource("1_b8a8s")]
-description = "Add filter options for visible and hidden"
-task_type = 1
-priority = 2
 
 [node name="task_marker2" parent="." instance=ExtResource("1_b8a8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
-description = "Add filter options for owned by current scene and owned by instanced scene"
-task_type = 1
-priority = 2
 
 [node name="task_marker3" parent="." instance=ExtResource("1_b8a8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
-description = "Save tasks panel options to resource"
-details = "Resource should be per project, either outside of version control or easily removable from version control"
-task_type = 1
-priority = 2
 
 [node name="task_marker4" parent="." instance=ExtResource("1_b8a8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
-description = "Remove nodes menu from tasks panel"
-details = "Resource should be per project, either outside of version control or easily removable from version control"
-task_type = 2
-priority = 2

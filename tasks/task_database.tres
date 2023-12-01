@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d4iklirmiah32"]
+
+[ext_resource type="Script" path="res://addons/scene_task_tracker/scripts/task_database.gd" id="1_ccxh0"]
+
+[resource]
+script = ExtResource("1_ccxh0")
+_last_uid = 0
+_tasks = Array[Resource("res://addons/scene_task_tracker/scripts/task.gd")]([])

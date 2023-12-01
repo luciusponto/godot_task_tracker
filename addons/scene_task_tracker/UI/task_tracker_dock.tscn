@@ -28,6 +28,15 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="NewTaskButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("4_s2hxd")
+flat = true
+
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="FilterMenuButton" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -97,7 +106,7 @@ disabled = true
 icon = ExtResource("11_hf5pu")
 flat = true
 
-[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="NodesMenuButton" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
@@ -146,3 +155,139 @@ columns = 2
 hide_folding = true
 hide_root = true
 select_mode = 2
+
+[node name="TaskEditorWindow" type="Window" parent="."]
+unique_name_in_owner = true
+title = "Task Editor"
+initial_position = 2
+size = Vector2i(800, 600)
+transient = true
+exclusive = true
+
+[node name="MarginContainer" type="MarginContainer" parent="TaskEditorWindow"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TaskEditorWindow/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Type"
+
+[node name="TaskTypeSelector" type="OptionButton" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Bug"
+popup/item_0/id = 0
+popup/item_1/text = "Feature"
+popup/item_1/id = 1
+
+[node name="VSeparator4" type="VSeparator" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+text = "Priority"
+
+[node name="TaskPrioritySelector" type="OptionButton" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Bug"
+popup/item_0/id = 0
+popup/item_1/text = "Feature"
+popup/item_1/id = 1
+
+[node name="VSeparator2" type="VSeparator" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+text = "Status"
+
+[node name="TaskStatusSelector" type="OptionButton" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer3"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Bug"
+popup/item_0/id = 0
+popup/item_1/text = "Feature"
+popup/item_1/id = 1
+
+[node name="VSeparator3" type="VSeparator" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Short Description"
+
+[node name="DescriptionTextEdit" type="TextEdit" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+placeholder_text = "Short description, as in a git commit message. E.g.:
+Add ok button to test popup"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Details"
+
+[node name="DetailsTextEdit" type="TextEdit" parent="TaskEditorWindow/MarginContainer/VBoxContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Extra details. E.g.:
+The ok button must do a, b, c. It should look like this and that."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TaskEditorWindow/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TaskEditorOkButton" type="Button" parent="TaskEditorWindow/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "OK"
+
+[node name="Spacer" type="Control" parent="TaskEditorWindow/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="TaskEditorCancelButton" type="Button" parent="TaskEditorWindow/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Cancel"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ct5y4skqhwwij"]
 
-[ext_resource type="PackedScene" uid="uid://cn8mw3h8uya21" path="res://addons/scene_task_tracker/task_marker.tscn" id="1_r5lit"]
+[ext_resource type="PackedScene" uid="uid://cn8mw3h8uya21" path="res://addons/scene_task_tracker/scenes/task_marker.tscn" id="1_r5lit"]
 
 [node name="Completed - 20231027" type="Node3D"]
 
