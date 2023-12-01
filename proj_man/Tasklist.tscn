@@ -23,3 +23,10 @@ description = "Save tasks panel options to resource"
 details = "Resource should be per project, either outside of version control or easily removable from version control"
 task_type = 1
 priority = 2
+
+[node name="task_marker4" parent="." instance=ExtResource("1_b8a8s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+description = "Remove nodes menu from tasks panel"
+details = "Resource should be per project, either outside of version control or easily removable from version control"
+task_type = 2
+priority = 2
